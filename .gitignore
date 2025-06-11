@@ -42,7 +42,24 @@ ehthumbs.db
 Thumbs.db
 
 ### Application specific ###
-application-local.properties
-application-dev.properties
+# Ignore local and development properties that might contain sensitive data
+src/main/resources/application-local.properties
+src/main/resources/application-dev.properties
+src/main/resources/application-prod.properties
+
+# But keep the main application.properties
+!src/main/resources/application.properties
+
+# Log files
 *.log
 logs/
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+
+# Maven
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
