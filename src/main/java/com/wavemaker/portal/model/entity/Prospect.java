@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 public class Prospect {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(columnDefinition = "serial")
+    private Integer id;
 
     @Column(name = "company_name", nullable = false)
     private String companyName;

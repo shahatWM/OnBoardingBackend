@@ -9,7 +9,8 @@ import lombok.Data;
 public class TeamMember {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(columnDefinition = "serial")
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "team_id")

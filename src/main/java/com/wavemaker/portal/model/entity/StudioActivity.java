@@ -10,7 +10,8 @@ import java.math.BigDecimal;
 public class StudioActivity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(columnDefinition = "serial")
+    private Integer id;
 
     @OneToOne
     @JoinColumn(name = "member_id")

@@ -12,7 +12,8 @@ import java.util.List;
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(columnDefinition = "serial")
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "prospect_id")

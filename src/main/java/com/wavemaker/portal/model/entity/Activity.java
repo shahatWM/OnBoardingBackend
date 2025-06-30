@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 public class Activity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(columnDefinition = "serial")
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "prospect_id")

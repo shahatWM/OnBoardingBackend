@@ -9,7 +9,8 @@ import lombok.Data;
 public class AcademyCourse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(columnDefinition = "serial")
+    private Integer id;
 
     private String title;
     private String duration;
