@@ -16,11 +16,12 @@ jobs:
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNME }}
+          username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
-            cd ~/OnBoardingBackend || git clone https://github.com/shahatWM/OnBoardingBackend.git && cd OnBoardingBackend
-            git pull origin main
-            docker build -t onboarding-backend .
-            docker stop $(docker ps -q --filter ancestor=onboarding-backend) || true
-            docker run -d -p 8080:8080 onboarding-backend
+  cd ~/OnBoardingBackend || git clone https://github.com/shahatWM/OnBoardingBackend.git && cd OnBoardingBackend
+  git pull origin main
+  sudo docker build -t onboarding-backend .
+  sudo docker stop $(sudo docker ps -q --filter ancestor=onboarding-backend) || true
+  sudo docker run -d -p 8080:8080 onboarding-backend
+
