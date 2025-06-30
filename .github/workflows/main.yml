@@ -19,9 +19,10 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
-  cd ~/OnBoardingBackend || git clone https://github.com/shahatWM/OnBoardingBackend.git && cd OnBoardingBackend
-  git pull origin main
-  sudo docker build -t onboarding-backend .
-  sudo docker stop $(sudo docker ps -q --filter ancestor=onboarding-backend) || true
-  sudo docker run -d -p 8080:8080 onboarding-backend
+            cd ~/OnBoardingBackend || git clone https://github.com/shahatWM/OnBoardingBackend.git
+            cd OnBoardingBackend
+            git pull origin main
+            sudo docker build -t onboarding-backend .
+            sudo docker stop $(sudo docker ps -q --filter ancestor=onboarding-backend) || true
+            sudo docker run -d -p 8080:8080 onboarding-backend
 
