@@ -11,8 +11,8 @@ import java.util.List;
 public class AcademyBundle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "serial")
-    private Integer id;
+    @Column(name = "id")
+    private Long id;
 
 
     @Column(name = "bundle_key", unique = true)
