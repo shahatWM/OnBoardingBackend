@@ -15,7 +15,7 @@
     
     WORKDIR /app
     
-    # Copy only the final JAR
+    # Copy only the final   Jar
     COPY --from=builder /app/target/portal-0.0.1-SNAPSHOT.jar .
     
     EXPOSE 8080
