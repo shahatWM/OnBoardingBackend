@@ -3,6 +3,7 @@ name: Build and Deploy to EC2
 on:
   push:
     branches: [ main ]
+    workflow_dispatch:   # This enables manual trigger from GitHub UI
 
 jobs:
   deploy:
