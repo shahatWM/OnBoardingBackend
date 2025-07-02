@@ -44,6 +44,8 @@ public class Prospect {
     private User createdBy;
 
     private LocalDateTime updated;
+
+    @Column(name = "updated_by")
     private String updatedBy;
 
     @Column(name = "created_at")
