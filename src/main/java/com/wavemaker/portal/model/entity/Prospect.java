@@ -1,5 +1,6 @@
 package com.wavemaker.portal.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -66,7 +67,7 @@ public class Prospect {
     }
 
     public enum Industry {
-        Fintech, Telecomunication, Banking, Automotive, HealthCare, Manufacturing, SupplyChain
+        Fintech, Telecomunication, Banking, Automotive, @JsonProperty("Health Care") HealthCare, Manufacturing, @JsonProperty("Supply Chain") SupplyChain
     }
 
     public enum Health {
