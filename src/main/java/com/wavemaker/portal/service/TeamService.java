@@ -78,7 +78,7 @@ public class TeamService {
     private TeamMemberDTO convertToMemberDTO(TeamMember member) {
         TeamMemberDTO dto = new TeamMemberDTO();
         dto.setId(member.getId());
-        dto.setTeamId(member.getTeam().getId());
+        dto.setTeamId(member.getTeam().getId().toString()); // ✅ FIXED
         dto.setEmail(member.getEmail());
         dto.setIsAdmin(member.getIsAdmin());
         return dto;

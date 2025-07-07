@@ -35,7 +35,7 @@ public class TeamMemberService {
     private TeamMemberDTO convertToDTO(TeamMember member) {
         TeamMemberDTO dto = new TeamMemberDTO();
         dto.setId(member.getId());
-        dto.setTeamId(member.getTeam().getId());
+        dto.setTeamId(member.getTeam().getId().toString()); // <-- Fix here
         dto.setEmail(member.getEmail());
         dto.setIsAdmin(member.getIsAdmin());
         return dto;
