@@ -41,7 +41,8 @@ public class TeamService {
         // Convert String to Long before findById
         Long prospectId = Long.parseLong(teamDTO.getProspectId());
         Prospect prospect = prospectRepository.findById(prospectId)
-        .orElseThrow(() -> new RuntimeException("Prospect not found"));
+                .orElseThrow(() -> new RuntimeException("Prospect not found"));
+
 
         team.setProspect(prospect);
 
@@ -52,9 +53,9 @@ public class TeamService {
     @Transactional
     public TeamMemberDTO addMemberToTeam(String teamIdStr, TeamMemberDTO memberDTO) {
         Long teamId = Long.parseLong(teamIdStr);
-        Long parsedTeamId = Long.parseLong(teamIdStr);
-        Team team = teamRepository.findById(parsedTeamId)
-            .orElseThrow(() -> new RuntimeException("Team not found"));
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new RuntimeException("Team not found"));
+
 
 
         TeamMember member = new TeamMember();
@@ -69,7 +70,7 @@ public class TeamService {
     private TeamDTO convertToDTO(Team team) {
         TeamDTO dto = new TeamDTO();
         dto.setId(team.getId());
-        dto.setProspectId(team.getProspect().getId().toString());
+        dto.setProspectId(String.valueOf(team.getProspect().getId()));
         dto.setTeamName(team.getTeamName());
         dto.setStartDate(team.getStartDate());
         dto.setEndDate(team.getEndDate());

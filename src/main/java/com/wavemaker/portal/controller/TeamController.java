@@ -90,7 +90,7 @@ public class TeamController {
             
             @Parameter(description = "Member details", required = true)
             @RequestBody TeamMemberDTO memberDTO) {
-        return ResponseEntity.ok(teamService.addMemberToTeam(teamId, memberDTO));
+        return ResponseEntity.ok(teamService.addMemberToTeam(String.valueOf(teamId), memberDTO));
     }
 
     @Operation(
@@ -139,6 +139,6 @@ public class TeamController {
             
             @Parameter(description = "Admin status to set", required = true)
             @RequestParam Boolean isAdmin) {
-        return ResponseEntity.ok(teamMemberService.updateMemberRole(memberId, isAdmin));
+        return ResponseEntity.ok(teamService.updateMemberRole(String.valueOf(memberId), isAdmin));
     }
 }
