@@ -26,7 +26,7 @@ public class TeamMemberService {
     public TeamMemberDTO updateMemberRole(Long memberId, Boolean isAdmin) {
         TeamMember member = teamMemberRepository.findById(memberId)
                 .orElseThrow(() -> new RuntimeException("Team member not found"));
-        
+
         member.setIsAdmin(isAdmin);
         TeamMember updatedMember = teamMemberRepository.save(member);
         return convertToDTO(updatedMember);
@@ -35,7 +35,7 @@ public class TeamMemberService {
     private TeamMemberDTO convertToDTO(TeamMember member) {
         TeamMemberDTO dto = new TeamMemberDTO();
         dto.setId(member.getId());
-        dto.setTeamId(member.getTeam().getId().toString()); // <-- Fix here
+        dto.setTeamId(member.getTeam().getId().toString()); // Long to String
         dto.setEmail(member.getEmail());
         dto.setIsAdmin(member.getIsAdmin());
         return dto;

@@ -37,11 +37,11 @@ public class TeamService {
     public TeamDTO createTeam(TeamDTO teamDTO) {
         Team team = new Team();
         updateTeamFromDTO(team, teamDTO);
-        
-        Prospect prospect = prospectRepository.findById(teamDTO.getProspectId())
+
+        Prospect prospect = prospectRepository.findById(Long.parseLong(teamDTO.getProspectId()))
                 .orElseThrow(() -> new RuntimeException("Prospect not found"));
         team.setProspect(prospect);
-        
+
         Team savedTeam = teamRepository.save(team);
         return convertToDTO(savedTeam);
     }
@@ -63,7 +63,7 @@ public class TeamService {
     private TeamDTO convertToDTO(Team team) {
         TeamDTO dto = new TeamDTO();
         dto.setId(team.getId());
-        dto.setProspectId(team.getProspect().getId());
+        dto.setProspectId(team.getProspect().getId().toString());
         dto.setTeamName(team.getTeamName());
         dto.setStartDate(team.getStartDate());
         dto.setEndDate(team.getEndDate());
@@ -78,7 +78,7 @@ public class TeamService {
     private TeamMemberDTO convertToMemberDTO(TeamMember member) {
         TeamMemberDTO dto = new TeamMemberDTO();
         dto.setId(member.getId());
-        dto.setTeamId(member.getTeam().getId().toString()); // ✅ FIXED
+        dto.setTeamId(member.getTeam().getId().toString());  // Long to String
         dto.setEmail(member.getEmail());
         dto.setIsAdmin(member.getIsAdmin());
         return dto;
