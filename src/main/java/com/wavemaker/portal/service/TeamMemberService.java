@@ -24,19 +24,16 @@ public class TeamMemberService {
     }
 
     @Transactional
-    public TeamMemberDTO updateMemberRole(String memberIdStr, Boolean isAdmin) {
+    public TeamMemberDTO updateMemberRole(String memberId, Boolean isAdmin) {
         Long parsedId = Long.parseLong(memberId);
         TeamMember member = teamMemberRepository.findById(parsedId)
                 .orElseThrow(() -> new RuntimeException("Team member not found"));
 
-
-
         member.setIsAdmin(isAdmin);
         TeamMember updatedMember = teamMemberRepository.save(member);
-        return convertToDTO(teamMemberRepository.findById(parsedId)
-        .orElseThrow(() -> new RuntimeException("Team member not found")));
-
+        return convertToDTO(updatedMember);
     }
+
 
     private TeamMemberDTO convertToDTO(TeamMember member) {
         TeamMemberDTO dto = new TeamMemberDTO();
