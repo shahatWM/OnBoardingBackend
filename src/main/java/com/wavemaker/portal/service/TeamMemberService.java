@@ -26,8 +26,10 @@ public class TeamMemberService {
     @Transactional
     public TeamMemberDTO updateMemberRole(String memberIdStr, Boolean isAdmin) {
         Long memberId = Long.parseLong(memberIdStr);
+        Long memberId = Long.parseLong(memberIdStr);
         TeamMember member = teamMemberRepository.findById(memberId)
                 .orElseThrow(() -> new RuntimeException("Team member not found"));
+
 
         member.setIsAdmin(isAdmin);
         TeamMember updatedMember = teamMemberRepository.save(member);
