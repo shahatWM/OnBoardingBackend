@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class TeamService {
+
     @Autowired
     private TeamRepository teamRepository;
 
@@ -47,8 +48,8 @@ public class TeamService {
     }
 
     @Transactional
-    public TeamMemberDTO addMemberToTeam(Long teamId, TeamMemberDTO memberDTO) {
-        Team team = teamRepository.findById(teamId)
+    public TeamMemberDTO addMemberToTeam(String teamId, TeamMemberDTO memberDTO) {
+        Team team = teamRepository.findById(Long.parseLong(teamId))
                 .orElseThrow(() -> new RuntimeException("Team not found"));
 
         TeamMember member = new TeamMember();
@@ -78,7 +79,7 @@ public class TeamService {
     private TeamMemberDTO convertToMemberDTO(TeamMember member) {
         TeamMemberDTO dto = new TeamMemberDTO();
         dto.setId(member.getId());
-        dto.setTeamId(member.getTeam().getId().toString());  // Long to String
+        dto.setTeamId(member.getTeam().getId().toString());
         dto.setEmail(member.getEmail());
         dto.setIsAdmin(member.getIsAdmin());
         return dto;
