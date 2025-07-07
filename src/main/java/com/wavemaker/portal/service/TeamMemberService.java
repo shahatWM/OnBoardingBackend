@@ -12,20 +12,21 @@ import java.util.stream.Collectors;
 
 @Service
 public class TeamMemberService {
-
     @Autowired
     private TeamMemberRepository teamMemberRepository;
 
     @Transactional(readOnly = true)
-    public List<TeamMemberDTO> getMembersByTeam(String teamId) {
-        return teamMemberRepository.findByTeamId(Long.parseLong(teamId)).stream()
+    public List<TeamMemberDTO> getMembersByTeam(String teamIdStr) {
+        Long teamId = Long.parseLong(teamIdStr);
+        return teamMemberRepository.findByTeamId(teamId).stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public TeamMemberDTO updateMemberRole(String memberId, Boolean isAdmin) {
-        TeamMember member = teamMemberRepository.findById(Long.parseLong(memberId))
+    public TeamMemberDTO updateMemberRole(String memberIdStr, Boolean isAdmin) {
+        Long memberId = Long.parseLong(memberIdStr);
+        TeamMember member = teamMemberRepository.findById(memberId)
                 .orElseThrow(() -> new RuntimeException("Team member not found"));
 
         member.setIsAdmin(isAdmin);
@@ -35,7 +36,7 @@ public class TeamMemberService {
 
     private TeamMemberDTO convertToDTO(TeamMember member) {
         TeamMemberDTO dto = new TeamMemberDTO();
-        dto.setId(member.getId());
+        dto.setId(member.getId().toString());
         dto.setTeamId(member.getTeam().getId().toString());
         dto.setEmail(member.getEmail());
         dto.setIsAdmin(member.getIsAdmin());

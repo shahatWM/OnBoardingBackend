@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class TeamService {
-
     @Autowired
     private TeamRepository teamRepository;
 
@@ -39,7 +38,9 @@ public class TeamService {
         Team team = new Team();
         updateTeamFromDTO(team, teamDTO);
 
-        Prospect prospect = prospectRepository.findById(Long.parseLong(teamDTO.getProspectId()))
+        // Convert String to Long before findById
+        Long prospectId = Long.parseLong(teamDTO.getProspectId());
+        Prospect prospect = prospectRepository.findById(prospectId)
                 .orElseThrow(() -> new RuntimeException("Prospect not found"));
         team.setProspect(prospect);
 
@@ -48,8 +49,9 @@ public class TeamService {
     }
 
     @Transactional
-    public TeamMemberDTO addMemberToTeam(String teamId, TeamMemberDTO memberDTO) {
-        Team team = teamRepository.findById(Long.parseLong(teamId))
+    public TeamMemberDTO addMemberToTeam(String teamIdStr, TeamMemberDTO memberDTO) {
+        Long teamId = Long.parseLong(teamIdStr);
+        Team team = teamRepository.findById(teamId)
                 .orElseThrow(() -> new RuntimeException("Team not found"));
 
         TeamMember member = new TeamMember();
@@ -78,7 +80,7 @@ public class TeamService {
 
     private TeamMemberDTO convertToMemberDTO(TeamMember member) {
         TeamMemberDTO dto = new TeamMemberDTO();
-        dto.setId(member.getId());
+        dto.setId(member.getId().toString());
         dto.setTeamId(member.getTeam().getId().toString());
         dto.setEmail(member.getEmail());
         dto.setIsAdmin(member.getIsAdmin());
