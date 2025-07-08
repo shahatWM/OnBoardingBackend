@@ -1,3 +1,4 @@
+// TeamMemberService.java
 package com.wavemaker.portal.service;
 
 import com.wavemaker.portal.model.dto.TeamMemberDTO;
@@ -17,17 +18,15 @@ public class TeamMemberService {
     private TeamMemberRepository teamMemberRepository;
 
     @Transactional(readOnly = true)
-    public List<TeamMemberDTO> getMembersByTeam(String teamId) {
-        Long parsedTeamId = Long.parseLong(teamId);
-        return teamMemberRepository.findByTeamId(parsedTeamId).stream()
+    public List<TeamMemberDTO> getMembersByTeam(Long teamId) {
+        return teamMemberRepository.findByTeamId(teamId).stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public TeamMemberDTO updateMemberRole(String memberId, Boolean isAdmin) {
-        Long parsedId = Long.parseLong(memberId);
-        TeamMember member = teamMemberRepository.findById(parsedId)
+    public TeamMemberDTO updateMemberRole(Long memberId, Boolean isAdmin) {
+        TeamMember member = teamMemberRepository.findById(memberId)
                 .orElseThrow(() -> new RuntimeException("Team member not found"));
 
         member.setIsAdmin(isAdmin);
@@ -37,8 +36,8 @@ public class TeamMemberService {
 
     private TeamMemberDTO convertToDTO(TeamMember member) {
         TeamMemberDTO dto = new TeamMemberDTO();
-        dto.setId(String.valueOf(member.getId()));
-        dto.setTeamId(String.valueOf(member.getTeam().getId()));
+        dto.setId(member.getId());
+        dto.setTeamId(member.getTeam().getId());
         dto.setEmail(member.getEmail());
         dto.setIsAdmin(member.getIsAdmin());
         return dto;

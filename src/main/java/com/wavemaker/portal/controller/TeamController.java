@@ -1,11 +1,14 @@
+// TeamController.java
 package com.wavemaker.portal.controller;
 
 import com.wavemaker.portal.model.dto.TeamDTO;
 import com.wavemaker.portal.model.dto.TeamMemberDTO;
-import com.wavemaker.portal.service.TeamMemberService;
 import com.wavemaker.portal.service.TeamService;
+import com.wavemaker.portal.service.TeamMemberService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,29 +23,37 @@ public class TeamController {
     @Autowired
     private TeamMemberService teamMemberService;
 
+    @Operation(summary = "Get all teams")
     @GetMapping
-    public List<TeamDTO> getAllTeams() {
-        return teamService.getAllTeams();
+    public ResponseEntity<List<TeamDTO>> getAllTeams() {
+        return ResponseEntity.ok(teamService.getAllTeams());
     }
 
+    @Operation(summary = "Create a new team")
     @PostMapping
-    public TeamDTO createTeam(@RequestBody TeamDTO teamDTO) {
-        return teamService.createTeam(teamDTO);
+    public ResponseEntity<TeamDTO> createTeam(@RequestBody TeamDTO teamDTO) {
+        return ResponseEntity.ok(teamService.createTeam(teamDTO));
     }
 
+    @Operation(summary = "Add member to team")
     @PostMapping("/{teamId}/members")
-    public TeamMemberDTO addMemberToTeam(@PathVariable String teamId, @RequestBody TeamMemberDTO memberDTO) {
-        return teamService.addMemberToTeam(teamId, memberDTO);
+    public ResponseEntity<TeamMemberDTO> addMemberToTeam(
+            @PathVariable Long teamId,
+            @RequestBody TeamMemberDTO memberDTO) {
+        return ResponseEntity.ok(teamService.addMemberToTeam(teamId, memberDTO));
     }
 
+    @Operation(summary = "Get team members")
     @GetMapping("/{teamId}/members")
-    public List<TeamMemberDTO> getMembersByTeam(@PathVariable String teamId) {
-        return teamMemberService.getMembersByTeam(teamId);
+    public ResponseEntity<List<TeamMemberDTO>> getMembersByTeam(@PathVariable Long teamId) {
+        return ResponseEntity.ok(teamMemberService.getMembersByTeam(teamId));
     }
 
-    @PutMapping("/members/{memberId}/role")
-    @Operation(summary = "Update team member's role (admin or not)")
-    public TeamMemberDTO updateMemberRole(@PathVariable String memberId, @RequestParam Boolean isAdmin) {
-        return teamMemberService.updateMemberRole(memberId, isAdmin);
+    @Operation(summary = "Update member role")
+    @PutMapping("/members/{memberId}/admin")
+    public ResponseEntity<TeamMemberDTO> updateMemberRole(
+            @PathVariable Long memberId,
+            @RequestParam Boolean isAdmin) {
+        return ResponseEntity.ok(teamMemberService.updateMemberRole(memberId, isAdmin));
     }
 }
