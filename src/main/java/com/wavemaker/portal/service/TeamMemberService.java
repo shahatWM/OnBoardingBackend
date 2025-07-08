@@ -12,13 +12,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class TeamMemberService {
+
     @Autowired
     private TeamMemberRepository teamMemberRepository;
 
     @Transactional(readOnly = true)
-    public List<TeamMemberDTO> getMembersByTeam(String teamIdStr) {
-        Long teamId = Long.parseLong(teamIdStr);
-        return teamMemberRepository.findByTeamId(teamId).stream()
+    public List<TeamMemberDTO> getMembersByTeam(String teamId) {
+        Long parsedTeamId = Long.parseLong(teamId);
+        return teamMemberRepository.findByTeamId(parsedTeamId).stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
@@ -28,18 +29,16 @@ public class TeamMemberService {
         Long parsedId = Long.parseLong(memberId);
         TeamMember member = teamMemberRepository.findById(parsedId)
                 .orElseThrow(() -> new RuntimeException("Team member not found"));
-        
+
         member.setIsAdmin(isAdmin);
-        TeamMember updatedMember = teamMemberRepository.save(member);
-        return convertToDTO(updatedMember);
+        TeamMember updated = teamMemberRepository.save(member);
+        return convertToDTO(updated);
     }
-
-
 
     private TeamMemberDTO convertToDTO(TeamMember member) {
         TeamMemberDTO dto = new TeamMemberDTO();
-        dto.setId(member.getId().toString());
-        dto.setTeamId(member.getTeam().getId().toString());
+        dto.setId(String.valueOf(member.getId()));
+        dto.setTeamId(String.valueOf(member.getTeam().getId()));
         dto.setEmail(member.getEmail());
         dto.setIsAdmin(member.getIsAdmin());
         return dto;
