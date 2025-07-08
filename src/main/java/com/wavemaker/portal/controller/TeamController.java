@@ -49,11 +49,12 @@ public class TeamController {
         return ResponseEntity.ok(teamMemberService.getMembersByTeam(teamId));
     }
 
+    @Operation(summary = "Update a team member's admin role")
     @PutMapping("/members/{memberId}/role")
-    @Operation(summary = "Update member role (admin or not)")
     public ResponseEntity<TeamMemberDTO> updateMemberRole(
             @PathVariable String memberId,
             @RequestParam Boolean isAdmin) {
         return ResponseEntity.ok(teamMemberService.updateMemberRole(memberId, isAdmin));
     }
+
 }

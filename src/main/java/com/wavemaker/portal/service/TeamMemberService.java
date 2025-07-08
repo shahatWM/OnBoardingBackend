@@ -28,11 +28,12 @@ public class TeamMemberService {
         Long parsedId = Long.parseLong(memberId);
         TeamMember member = teamMemberRepository.findById(parsedId)
                 .orElseThrow(() -> new RuntimeException("Team member not found"));
-
+        
         member.setIsAdmin(isAdmin);
         TeamMember updatedMember = teamMemberRepository.save(member);
         return convertToDTO(updatedMember);
     }
+
 
 
     private TeamMemberDTO convertToDTO(TeamMember member) {

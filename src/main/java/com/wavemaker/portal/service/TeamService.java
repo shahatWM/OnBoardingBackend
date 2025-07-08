@@ -8,6 +8,7 @@ import com.wavemaker.portal.model.entity.TeamMember;
 import com.wavemaker.portal.repository.TeamRepository;
 import com.wavemaker.portal.repository.ProspectRepository;
 import com.wavemaker.portal.repository.TeamMemberRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class TeamService {
+
     @Autowired
     private TeamRepository teamRepository;
 
@@ -38,11 +40,9 @@ public class TeamService {
         Team team = new Team();
         updateTeamFromDTO(team, teamDTO);
 
-        // Convert String to Long before findById
         Long prospectId = Long.parseLong(teamDTO.getProspectId());
         Prospect prospect = prospectRepository.findById(prospectId)
                 .orElseThrow(() -> new RuntimeException("Prospect not found"));
-
 
         team.setProspect(prospect);
 
@@ -51,12 +51,10 @@ public class TeamService {
     }
 
     @Transactional
-    public TeamMemberDTO addMemberToTeam(String teamIdStr, TeamMemberDTO memberDTO) {
-        Long teamId = Long.parseLong(teamIdStr);
-        Team team = teamRepository.findById(teamId)
+    public TeamMemberDTO addMemberToTeam(String teamId, TeamMemberDTO memberDTO) {
+        Long parsedTeamId = Long.parseLong(teamId);
+        Team team = teamRepository.findById(parsedTeamId)
                 .orElseThrow(() -> new RuntimeException("Team not found"));
-
-
 
         TeamMember member = new TeamMember();
         member.setTeam(team);
@@ -70,22 +68,24 @@ public class TeamService {
     private TeamDTO convertToDTO(Team team) {
         TeamDTO dto = new TeamDTO();
         dto.setId(team.getId());
-        dto.setProspectId(String.valueOf(team.getProspect().getId()));
+        dto.setProspectId(team.getProspect().getId().toString());  // Ensure this is String
         dto.setTeamName(team.getTeamName());
         dto.setStartDate(team.getStartDate());
         dto.setEndDate(team.getEndDate());
+
         if (team.getTeamMembers() != null) {
             dto.setTeamMembers(team.getTeamMembers().stream()
                     .map(this::convertToMemberDTO)
                     .collect(Collectors.toList()));
         }
+
         return dto;
     }
 
     private TeamMemberDTO convertToMemberDTO(TeamMember member) {
         TeamMemberDTO dto = new TeamMemberDTO();
-        dto.setId(member.getId().toString());
-        dto.setTeamId(member.getTeam().getId().toString());
+        dto.setId(member.getId());
+        dto.setTeamId(member.getTeam().getId()); // Assuming teamId is Long in the DTO
         dto.setEmail(member.getEmail());
         dto.setIsAdmin(member.getIsAdmin());
         return dto;
