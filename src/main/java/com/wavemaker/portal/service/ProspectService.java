@@ -19,6 +19,9 @@ public class ProspectService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private TeamService teamService;
+
     @Transactional(readOnly = true)
     public List<ProspectDTO> getAllProspects() {
         return prospectRepository.findAll().stream()
@@ -30,13 +33,27 @@ public class ProspectService {
     public ProspectDTO createProspect(ProspectDTO prospectDTO, String userEmail) {
         Prospect prospect = new Prospect();
         updateProspectFromDTO(prospect, prospectDTO);
-        
+
         userRepository.findByEmail(userEmail)
                 .ifPresent(prospect::setCreatedBy);
-        
+
         Prospect savedProspect = prospectRepository.save(prospect);
+
+        // Create team if team info is present
+        if (prospectDTO.getTeamName() != null) {
+            TeamDTO teamDTO = new TeamDTO();
+            teamDTO.setProspectId(savedProspect.getId());
+            teamDTO.setTeamName(prospectDTO.getTeamName());
+            teamDTO.setStartDate(prospectDTO.getStartDate());
+            teamDTO.setEndDate(prospectDTO.getEndDate());
+            teamDTO.setTeamMembers(prospectDTO.getTeamMembers()); // pass members
+
+            teamService.createTeam(teamDTO);
+        }
+
         return convertToDTO(savedProspect);
     }
+
 
     private ProspectDTO convertToDTO(Prospect prospect) {
         ProspectDTO dto = new ProspectDTO();
