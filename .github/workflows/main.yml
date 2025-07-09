@@ -33,5 +33,10 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             docker pull ${{ secrets.DOCKER_USERNAME }}/onboarding-backend:latest
-            docker stop $(docker ps -q --filter ancestor=${{ secrets.DOCKER_USERNAME }}/onboarding-backend:latest) || true
+            OLD_CONTAINER=$(docker ps -q --filter ancestor=${{ secrets.DOCKER_USERNAME }}/onboarding-backend:latest)
+            if [ -n "$OLD_CONTAINER" ]; then
+              docker stop "$OLD_CONTAINER"
+              docker rm "$OLD_CONTAINER"
+            fi
+
             docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/onboarding-backend:latest
