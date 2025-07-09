@@ -64,7 +64,7 @@ public class TeamService {
     private TeamDTO convertToDTO(Team team) {
         TeamDTO dto = new TeamDTO();
         dto.setId(team.getId());
-        dto.setProspectId(team.getProspect().getId());
+        dto.setProspectId(String.valueOf(team.getProspect().getId()));
         dto.setTeamName(team.getTeamName());
         dto.setStartDate(team.getStartDate());
         dto.setEndDate(team.getEndDate());
