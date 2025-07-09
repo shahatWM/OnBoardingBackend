@@ -5,6 +5,7 @@ import com.wavemaker.portal.model.dto.TeamDTO;
 import com.wavemaker.portal.model.dto.TeamMemberDTO;
 import com.wavemaker.portal.service.TeamService;
 import io.swagger.v3.oas.annotations.Operation;
+import com.wavemaker.portal.service.TeamMemberService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
