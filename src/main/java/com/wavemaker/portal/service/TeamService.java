@@ -80,7 +80,7 @@ public class TeamService {
 
     private TeamMemberDTO convertToMemberDTO(TeamMember member) {
         TeamMemberDTO dto = new TeamMemberDTO();
-        dto.setId(member.getId());
+        dto.setId(String.valueOf(member.getId()));
         dto.setTeamId(member.getTeam().getId());
         dto.setEmail(member.getEmail());
         dto.setIsAdmin(member.getIsAdmin());
