@@ -1,4 +1,3 @@
-// TeamMemberService.java
 package com.wavemaker.portal.service;
 
 import com.wavemaker.portal.model.dto.TeamMemberDTO;
@@ -30,14 +29,14 @@ public class TeamMemberService {
                 .orElseThrow(() -> new RuntimeException("Team member not found"));
 
         member.setIsAdmin(isAdmin);
-        TeamMember updated = teamMemberRepository.save(member);
-        return convertToDTO(updated);
+        TeamMember updatedMember = teamMemberRepository.save(member);
+        return convertToDTO(updatedMember);
     }
 
     private TeamMemberDTO convertToDTO(TeamMember member) {
         TeamMemberDTO dto = new TeamMemberDTO();
         dto.setId(member.getId());
-        dto.setTeamId(String.valueOf(member.getTeam().getId()));
+        dto.setTeamId(member.getTeam().getId());
         dto.setEmail(member.getEmail());
         dto.setIsAdmin(member.getIsAdmin());
         return dto;

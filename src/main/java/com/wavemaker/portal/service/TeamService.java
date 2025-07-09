@@ -1,4 +1,3 @@
-// TeamService.java
 package com.wavemaker.portal.service;
 
 import com.wavemaker.portal.model.dto.TeamDTO;
@@ -18,6 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class TeamService {
+
     @Autowired
     private TeamRepository teamRepository;
 
@@ -64,15 +64,17 @@ public class TeamService {
     private TeamDTO convertToDTO(Team team) {
         TeamDTO dto = new TeamDTO();
         dto.setId(team.getId());
-        dto.setProspectId(String.valueOf(team.getProspect().getId()));
+        dto.setProspectId(team.getProspect().getId());
         dto.setTeamName(team.getTeamName());
         dto.setStartDate(team.getStartDate());
         dto.setEndDate(team.getEndDate());
+
         if (team.getTeamMembers() != null) {
             dto.setTeamMembers(team.getTeamMembers().stream()
                     .map(this::convertToMemberDTO)
                     .collect(Collectors.toList()));
         }
+
         return dto;
     }
 
