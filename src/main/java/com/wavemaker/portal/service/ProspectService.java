@@ -1,5 +1,5 @@
 package com.wavemaker.portal.service;
-import com.wavemaker.portal.dto.TeamDTO;
+import com.wavemaker.portal.model.dto.TeamDTO;
 import com.wavemaker.portal.model.dto.ProspectDTO;
 import com.wavemaker.portal.model.entity.Prospect;
 import com.wavemaker.portal.repository.ProspectRepository;
