@@ -29,8 +29,8 @@ public class ProspectDTO {
 
     // Team Info
     private String teamName;
-    private String startDate;  // Consider using LocalDate instead
-    private String endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     // Members
     private List<TeamMemberDTO> teamMembers;
