@@ -3,6 +3,7 @@ package com.wavemaker.portal.model.dto;
 import com.wavemaker.portal.model.entity.Prospect;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
